@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-main
+  labels:
+    app: phpmyadmin-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin-main
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin-main
+    spec:
+      containers:
+        - name: phpmyadmin-main
+          image: phpmyadmin/phpmyadmin
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          envFrom:
+           - configMapRef:
+               name: main-db
+      restartPolicy: Always
